@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OTP Test</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        input, button { padding: 8px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h2>OTP Authentication Test</h2>
+    <div id="signupSection">
+        <h3>Signup with OTP</h3>
+        <input type="email" id="email" placeholder="Email">
+        <button id="sendOtpBtn">Send OTP</button><br>
+        <input type="text" id="otpCode" placeholder="Enter OTP">
+        <button id="verifyBtn">Verify OTP</button>
+        <p id="status"></p>
+        <button id="signupBtn" disabled>Complete Signup</button>
+    </div>
+
+    <script>
+        // Simple OTP storage
+        let storedOTP = null;
+        let otpExpiry = null;
+
+        document.getElementById('sendOtpBtn').onclick = function() {
+            const email = document.getElementById('email').value;
+            if (!email) {
+                alert('Enter email');
+                return;
+            }
+            // Generate 6-digit OTP
+            const otp = Math.floor(100000 + Math.random() * 900000).toString();
+            storedOTP = otp;
+            otpExpiry = Date.now() + 5 * 60 * 1000; // 5 minutes
+            alert(`Your OTP is: ${otp} (demo only)`);
+            console.log(`OTP for ${email}: ${otp}`);
+            document.getElementById('status').innerHTML = 'OTP sent! Check alert or console.';
+        };
+
+        document.getElementById('verifyBtn').onclick = function() {
+            const entered = document.getElementById('otpCode').value;
+            if (!storedOTP) {
+                document.getElementById('status').innerHTML = '<span class="error">No OTP request. Send OTP first.</span>';
+                return;
+            }
+            if (Date.now() > otpExpiry) {
+                document.getElementById('status').innerHTML = '<span class="error">OTP expired. Request new one.</span>';
+                storedOTP = null;
+                return;
+            }
+            if (entered === storedOTP) {
+                document.getElementById('status').innerHTML = '<span class="success">OTP Verified! You can now sign up.</span>';
+                document.getElementById('signupBtn').disabled = false;
+            } else {
+                document.getElementById('status').innerHTML = '<span class="error">Invalid OTP. Try again.</span>';
+                document.getElementById('signupBtn').disabled = true;
+            }
+        };
+
+        document.getElementById('signupBtn').onclick = function() {
+            alert('Account created successfully! (Demo)');
+            // Here you would save user data
+        };
+    </script>
+</body>
+</html>

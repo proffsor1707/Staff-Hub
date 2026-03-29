@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <h2>👤 Employee Dashboard</h2>
+            <div>
+                <span id="empCurrentUser"></span>
+                <button id="empLogoutBtn" class="btn btn-outline">Logout</button>
+            </div>
+        </nav>
+
+        <div class="dashboard-grid">
+            <!-- Profile Card -->
+            <div class="profile-card">
+                <h3>📋 My Profile</h3>
+                <p><strong>Name:</strong> <span id="empName"></span></p>
+                <p><strong>ID:</strong> <span id="empId"></span></p>
+                <p><strong>Email:</strong> <span id="empEmail"></span></p>
+                <p><strong>Department:</strong> <span id="empDepartment"></span></p>
+            </div>
+
+            <!-- Attendance -->
+            <div class="card">
+                <h3>🕐 Mark Attendance</h3>
+                <div class="attendance-section">
+                    <p>Today's Status: <span id="todayStatus">Not Marked</span></p>
+                    <button id="markAttendanceBtn" class="btn btn-primary full-width">Mark Present</button>
+                    <p id="lastAttendance" style="font-size: 0.9rem; color: #666; margin-top: 10px;"></p>
+                </div>
+            </div>
+
+            <!-- Leave Request -->
+            <div class="card">
+                <h3>📅 Leave Request</h3>
+                <form id="leaveForm">
+                    <div class="form-group">
+                        <label>Leave Type:</label>
+                        <select id="leaveType" required>
+                            <option value="">Select Type</option>
+                            <option value="Sick">Sick Leave</option>
+                            <option value="Casual">Casual Leave</option>
+                            <option value="Vacation">Vacation</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>From Date:</label>
+                            <input type="date" id="leaveFrom" required>
+                        </div>
+                        <div class="form-group">
+                            <label>To Date:</label>
+                            <input type="date" id="leaveTo" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Reason:</label>
+                        <textarea id="leaveReason" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Submit Leave</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- My Records -->
+        <div class="section">
+            <h3>📊 My Records</h3>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showTab('attendance')">Attendance</button>
+                <button class="tab-btn" onclick="showTab('leaves')">Leaves</button>
+            </div>
+            
+            <div id="attendance" class="tab-content active">
+                <table id="myAttendanceTable">
+                    <thead>
+                        <tr><th>Date</th><th>Status</th><th>Time</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            
+            <div id="leaves" class="tab-content">
+                <table id="myLeavesTable">
+                    <thead>
+                        <tr><th>Date</th><th>Type</th><th>Duration</th><th>Status</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
